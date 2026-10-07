@@ -1,6 +1,7 @@
-"""EventSphere · Event Management System (AM Scrum PBL)
+"""EventSphere · Event Management System (ITL Lab & Scrum PBL)
 Standalone Python Web Application with Embedded REST API & Responsive Dashboard.
 Zero mandatory external dependencies - uses standard library http.server + sqlite3.
+Author: Sangram Shinde (B.Tech 3rd Year)
 """
 import os
 import sys
@@ -110,7 +111,9 @@ class EventSphereHandler(BaseHTTPRequestHandler):
 
         # 2. Standalone Kanban HTML
         if path == "/kanban":
-            kb_path = os.path.join(BASE_DIR, "kanban_board.html")
+            kb_path = os.path.join(BASE_DIR, "..", "kanban_board.html")
+            if not os.path.exists(kb_path):
+                kb_path = os.path.join(BASE_DIR, "kanban_board.html")
             if os.path.exists(kb_path):
                 self.send_response(200)
                 self.send_header("Content-Type", "text/html; charset=utf-8")
@@ -317,11 +320,12 @@ def run_server(port=DEFAULT_PORT):
 
     url = f"http://127.0.0.1:{port}"
     print(f"\n{'=' * 75}")
-    print(f"  🎪 EVENTSPHERE WEB SERVER RUNNING AT: {url}")
-    print(f"  Scrum Lead: Sangram Shinde | Course: Agile Methodologies (AM)")
-    print(f"  Database  : SQLite (database/event.db)")
+    print(f"  🎪 EVENTSPHERE (ITL LAB & SCRUM PBL) RUNNING AT: {url}")
+    print(f"  Student Lead : Sangram Shinde (B.Tech 3rd Year)")
+    print(f"  Subject      : Information Technology Lab (ITL) & Agile Methodologies (AM)")
+    print(f"  Database     : SQLite (database/event.db) [ACID Atomic Lock]")
     print(f"{'=' * 75}\n")
-    print(f"[*] Access the Dashboard at: {url}")
+    print(f"[*] Access the Working Dashboard at: {url}")
     print(f"[*] Automatically opening dashboard in your browser...")
     print(f"[*] Press CTRL+C to terminate the web server.\n")
 

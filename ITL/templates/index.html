@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventSphere · Event Management System (Scrum Agile PBL)</title>
+  <style>
+    :root {
+      --bg-primary: #0a0f1d;
+      --bg-secondary: #111827;
+      --bg-card: #1e293b;
+      --bg-card-hover: #283548;
+      --border-color: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #0284c7;
+      --accent-hover: #0369a1;
+      --accent-glow: rgba(2, 132, 199, 0.25);
+      --purple: #8b5cf6;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --radius: 12px;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Bar */
+    header {
+      background: rgba(17, 24, 39, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 14px 28px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+    .brand-text h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .brand-text p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* User Switcher Pill */
+    .user-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 30px;
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+    }
+    .role-badge {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.68rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      text-transform: uppercase;
+    }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      padding: 0 28px;
+      gap: 8px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 14px 18px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    .tab-btn:hover {
+      color: var(--text-main);
+    }
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      padding: 28px;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* KPI Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--purple));
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .stat-val {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-top: 6px;
+      color: var(--text-main);
+    }
+    .stat-desc {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Filters Bar */
+    .filter-bar {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .search-input, .select-input {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--text-main);
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-input { min-width: 260px; flex: 1; }
+    .search-input:focus, .select-input:focus { border-color: var(--accent); }
+
+    /* Event Cards Grid */
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+    .event-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s;
+    }
+    .event-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+    .event-category {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(2, 132, 199, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(2, 132, 199, 0.3);
+      margin-bottom: 10px;
+    }
+    .event-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .event-venue {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .event-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      padding: 10px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      margin-bottom: 14px;
+    }
+    .capacity-bar {
+      height: 6px;
+      background: #334155;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .capacity-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--success));
+      border-radius: 3px;
+    }
+    .btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn-secondary {
+      background: #334155;
+      color: var(--text-main);
+    }
+    .btn-secondary:hover { background: #475569; }
+    .btn-danger { background: var(--danger); }
+    .btn-danger:hover { background: #dc2626; }
+
+    /* Tables */
+    .table-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+    th {
+      background: #182234;
+      padding: 14px 18px;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+    }
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #e2e8f0;
+    }
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .badge-success { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid var(--success); }
+    .badge-warning { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid var(--warning); }
+    .badge-danger { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid var(--danger); }
+    .badge-blue { background: rgba(2, 132, 199, 0.15); color: #38bdf8; border: 1px solid var(--accent); }
+
+    /* Modals */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(6px);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-box {
+      background: #111827;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 26px;
+      width: 90%;
+      max-width: 520px;
+      box-shadow: var(--shadow);
+    }
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .form-group {
+      margin-bottom: 14px;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1e293b;
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      display: none;
+      z-index: 1000;
+      align-items: center;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">🎪</div>
+      <div class="brand-text">
+        <h1>EventSphere · Platform Dashboard</h1>
+        <p>B.Tech Agile Methodologies (AM PBL) · Lead: Sangram Shinde</p>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 12px; align-items: center;">
+      <div class="user-pill">
+        <span>👤 <strong>Aryan Deshmukh</strong></span>
+        <span class="role-badge">Attendee</span>
+      </div>
+      <a href="/kanban" target="_blank" class="btn btn-secondary" style="width: auto; padding: 6px 14px; font-size: 0.8rem;">📋 Open Kanban Board</a>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('events')">🎪 Events Directory</button>
+    <button class="tab-btn" onclick="switchTab('tickets')">🎟️ My Booked Tickets</button>
+    <button class="tab-btn" onclick="switchTab('scrum')">📊 Agile Backlog & Kanban</button>
+    <button class="tab-btn" onclick="switchTab('sprints')">🏃 5-Week Sprint Cadence</button>
+    <button class="tab-btn" onclick="switchTab('audit')">🔍 Admin Oversight & Audit</button>
+  </div>
+
+  <main>
+    <!-- Top Statistics Bar -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Active Events</div>
+        <div class="stat-val" id="kpi-events">5</div>
+        <div class="stat-desc">Across Tech, Culture & Workshops</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Tickets Reserved</div>
+        <div class="stat-val" id="kpi-booked">187</div>
+        <div class="stat-desc">Atomic Concurrency Guard Enabled</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Agile User Stories</div>
+        <div class="stat-val">12</div>
+        <div class="stat-desc">54 Total Story Points</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Automated Unit Tests</div>
+        <div class="stat-val" style="color: var(--success);">15 / 15</div>
+        <div class="stat-desc">100% Quality Gate Pass Rate</div>
+      </div>
+    </div>
+
+    <!-- TAB 1: EVENTS CATALOG -->
+    <div id="tab-events" class="tab-content active">
+      <div class="filter-bar">
+        <input type="text" id="eventSearch" class="search-input" placeholder="🔍 Search event title, venue, or organizer..." oninput="filterEvents()">
+        <select id="categoryFilter" class="select-input" onchange="filterEvents()">
+          <option value="">All Categories</option>
+          <option value="Technology">Technology</option>
+          <option value="Coding">Coding / Hackathon</option>
+          <option value="Cultural">Cultural & Arts</option>
+          <option value="Workshop">Workshop</option>
+          <option value="Networking">Networking</option>
+        </select>
+        <button class="btn" style="width: auto;" onclick="openCreateEventModal()">➕ Publish New Event</button>
+      </div>
+
+      <div class="events-grid" id="eventsContainer">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- TAB 2: MY TICKETS -->
+    <div id="tab-tickets" class="tab-content">
+      <h3 style="margin-bottom: 16px;">🎟️ Attendee Registration Ledger</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Ticket Code</th>
+              <th>Event Title</th>
+              <th>Venue</th>
+              <th>Date & Time</th>
+              <th>Seats</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="ticketsTableBody">
+            <!-- Rendered dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 3: AGILE SCRUM & KANBAN -->
+    <div id="tab-scrum" class="tab-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3>📋 Agile Product Backlog & Stories</h3>
+        <span class="badge badge-blue">Modified Fibonacci Scale (1, 2, 3, 5, 8)</span>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Story ID</th>
+              <th>User Story Title</th>
+              <th>Role</th>
+              <th>Points</th>
+              <th>MoSCoW Priority</th>
+              <th>Sprint Target</th>
+              <th>Kanban Status</th>
+              <th>Assignee</th>
+            </tr>
+          </thead>
+          <tbody id="storiesTableBody">
+            <!-- Rendered dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 4: SPRINTS CADENCE -->
+    <div id="tab-sprints" class="tab-content">
+      <h3 style="margin-bottom: 16px;">🏃 5-Week Scrum Sprint Cadence & Velocity Tracking</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Sprint</th>
+              <th>Sprint Name</th>
+              <th>Sprint Goal</th>
+              <th>Dates</th>
+              <th>Committed</th>
+              <th>Completed</th>
+              <th>Velocity</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="sprintsTableBody">
+            <!-- Rendered dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 5: AUDIT TRAIL -->
+    <div id="tab-audit" class="tab-content">
+      <h3 style="margin-bottom: 16px;">🔍 System Administrative Audit Logs</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Action Type</th>
+              <th>User</th>
+              <th>Details & Concurrency Audit</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody id="auditTableBody">
+            <!-- Rendered dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- BOOK TICKET MODAL -->
+  <div class="modal-backdrop" id="bookModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 id="bookModalTitle">Book Ticket</h3>
+        <button style="background:none; border:none; color:#aaa; font-size:1.5rem; cursor:pointer;" onclick="closeModal('bookModal')">&times;</button>
+      </div>
+      <input type="hidden" id="bookEventId">
+      <div class="form-group">
+        <label class="form-label">Event</label>
+        <p id="bookEventName" style="color: #38bdf8; font-weight:700;"></p>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Available Seats</label>
+        <p id="bookAvailSeats" style="font-weight:700;"></p>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Number of Seats to Reserve</label>
+        <input type="number" id="bookSeatsCount" class="search-input" value="1" min="1" max="10">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes / Instructions</label>
+        <input type="text" id="bookNotes" class="search-input" placeholder="e.g. Student pass / VIP seating">
+      </div>
+      <button class="btn" onclick="submitBooking()">Confirm Booking</button>
+    </div>
+  </div>
+
+  <!-- RESCHEDULE MODAL -->
+  <div class="modal-backdrop" id="reschedModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3>Transfer / Reschedule Ticket</h3>
+        <button style="background:none; border:none; color:#aaa; font-size:1.5rem; cursor:pointer;" onclick="closeModal('reschedModal')">&times;</button>
+      </div>
+      <input type="hidden" id="reschedTicketId">
+      <div class="form-group">
+        <label class="form-label">Ticket Code</label>
+        <p id="reschedTicketCode" style="color:#38bdf8; font-weight:700;"></p>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Select Target Event</label>
+        <select id="reschedTargetEvent" class="select-input" style="width: 100%;">
+          <!-- Options populated dynamically -->
+        </select>
+      </div>
+      <button class="btn" onclick="submitReschedule()">Transfer Ticket</button>
+    </div>
+  </div>
+
+  <!-- CREATE EVENT MODAL -->
+  <div class="modal-backdrop" id="createEventModal">
+    <div class="modal-box" style="max-width: 600px;">
+      <div class="modal-head">
+        <h3>Publish New Event (Organizer)</h3>
+        <button style="background:none; border:none; color:#aaa; font-size:1.5rem; cursor:pointer;" onclick="closeModal('createEventModal')">&times;</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Event Title</label>
+        <input type="text" id="ceTitle" class="search-input" placeholder="e.g. Full-Stack Python Workshop">
+      </div>
+      <div class="form-group" style="display:flex; gap:12px;">
+        <div style="flex:1;">
+          <label class="form-label">Category</label>
+          <input type="text" id="ceCategory" class="search-input" placeholder="e.g. Technology">
+        </div>
+        <div style="flex:1;">
+          <label class="form-label">Date (YYYY-MM-DD)</label>
+          <input type="text" id="ceDate" class="search-input" value="2026-11-20">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Venue</label>
+        <input type="text" id="ceVenue" class="search-input" placeholder="e.g. City Auditorium Hall A">
+      </div>
+      <div class="form-group" style="display:flex; gap:12px;">
+        <div style="flex:1;">
+          <label class="form-label">Ticket Price (Rs.)</label>
+          <input type="number" id="cePrice" class="search-input" value="500">
+        </div>
+        <div style="flex:1;">
+          <label class="form-label">Total Capacity (Seats)</label>
+          <input type="number" id="ceCapacity" class="search-input" value="60">
+        </div>
+      </div>
+      <button class="btn" onclick="submitCreateEvent()">Publish Event</button>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast"></div>
+
+  <script>
+    let allEvents = [];
+    let allTickets = [];
+
+    function showToast(msg, isError = false) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.borderLeft = isError ? "4px solid var(--danger)" : "4px solid var(--success)";
+      t.style.display = "flex";
+      setTimeout(() => { t.style.display = "none"; }, 3500);
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelector(`button[onclick="switchTab('${tabId}')"]`).classList.add('active');
+      document.getElementById(`tab-${tabId}`).classList.add('active');
+
+      if (tabId === 'events') loadEvents();
+      if (tabId === 'tickets') loadTickets();
+      if (tabId === 'scrum') loadUserStories();
+      if (tabId === 'sprints') loadSprints();
+      if (tabId === 'audit') loadAuditLogs();
+    }
+
+    async function loadEvents() {
+      try {
+        const res = await fetch('/api/events');
+        const json = await res.json();
+        allEvents = json.data;
+        renderEvents(allEvents);
+      } catch(e) {
+        console.error(e);
+      }
+    }
+
+    function renderEvents(events) {
+      const c = document.getElementById('eventsContainer');
+      c.innerHTML = '';
+      if (!events || events.length === 0) {
+        c.innerHTML = '<p style="color:var(--text-muted); grid-column:1/-1;">No events found matching criteria.</p>';
+        return;
+      }
+
+      events.forEach(ev => {
+        const pct = Math.round((ev.booked_tickets / ev.total_capacity) * 100);
+        const card = document.createElement('div');
+        card.className = 'event-card';
+        card.innerHTML = `
+          <div>
+            <span class="event-category">${ev.category}</span>
+            <div class="event-title">${ev.title}</div>
+            <div class="event-venue">📍 ${ev.venue}</div>
+            <div class="event-meta">
+              <span>📅 ${ev.event_date}</span>
+              <span>⏰ ${ev.start_time} - ${ev.end_time}</span>
+              <span><strong>Rs.${ev.ticket_price}</strong></span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:6px;">
+              <span>Capacity: ${ev.booked_tickets} / ${ev.total_capacity} booked</span>
+              <span>${ev.available_seats} remaining</span>
+            </div>
+            <div class="capacity-bar">
+              <div class="capacity-fill" style="width: ${pct}%;"></div>
+            </div>
+          </div>
+          <button class="btn" ${ev.available_seats <= 0 ? 'disabled style="opacity:0.5;"' : ''} onclick="openBookModal(${ev.id}, '${ev.title.replace(/'/g, "\\'")}', ${ev.available_seats})">
+            ${ev.available_seats > 0 ? '🎟️ Reserve Ticket' : '🚫 Sold Out'}
+          </button>
+        `;
+        c.appendChild(card);
+      });
+    }
+
+    function filterEvents() {
+      const q = document.getElementById('eventSearch').value.toLowerCase();
+      const cat = document.getElementById('categoryFilter').value;
+      const filtered = allEvents.filter(e => {
+        const matchQ = !q || e.title.toLowerCase().includes(q) || e.venue.toLowerCase().includes(q) || e.organization_name.toLowerCase().includes(q);
+        const matchCat = !cat || e.category.toLowerCase() === cat.toLowerCase();
+        return matchQ && matchCat;
+      });
+      renderEvents(filtered);
+    }
+
+    async function loadTickets() {
+      try {
+        const res = await fetch('/api/tickets?user_id=4'); // Aryan Deshmukh
+        const json = await res.json();
+        allTickets = json.data;
+        const tbody = document.getElementById('ticketsTableBody');
+        tbody.innerHTML = '';
+        allTickets.forEach(t => {
+          const isConf = t.status === 'Confirmed';
+          const badgeClass = isConf ? 'badge-success' : 'badge-danger';
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><code>${t.ticket_code}</code></td>
+            <td><strong>${t.event_title}</strong></td>
+            <td>${t.venue}</td>
+            <td>${t.event_date} (${t.start_time})</td>
+            <td>${t.seats_booked}</td>
+            <td>Rs.${t.total_amount}</td>
+            <td><span class="badge ${badgeClass}">${t.status}</span></td>
+            <td>
+              ${isConf ? `
+                <div style="display:flex; gap:6px;">
+                  <button class="btn btn-secondary" style="width:auto; padding:4px 8px; font-size:0.75rem;" onclick="openRescheduleModal(${t.id}, '${t.ticket_code}', ${t.event_id})">Transfer</button>
+                  <button class="btn btn-danger" style="width:auto; padding:4px 8px; font-size:0.75rem;" onclick="cancelTicket(${t.id})">Cancel</button>
+                </div>
+              ` : '<span style="color:var(--text-muted); font-size:0.75rem;">Archived</span>'}
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch(e) {
+        console.error(e);
+      }
+    }
+
+    function openBookModal(id, title, avail) {
+      document.getElementById('bookEventId').value = id;
+      document.getElementById('bookEventName').textContent = title;
+      document.getElementById('bookAvailSeats').textContent = `${avail} seats open`;
+      document.getElementById('bookModal').style.display = 'flex';
+    }
+
+    async function submitBooking() {
+      const event_id = document.getElementById('bookEventId').value;
+      const seats = document.getElementById('bookSeatsCount').value;
+      const notes = document.getElementById('bookNotes').value;
+
+      try {
+        const res = await fetch('/api/book-ticket', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ user_id: 4, event_id: parseInt(event_id), seats: parseInt(seats), notes })
+        });
+        const json = await res.json();
+        if (json.status === 'success') {
+          showToast(`✔ ${json.message} (Code: ${json.data.ticket_code})`);
+          closeModal('bookModal');
+          loadEvents();
+        } else {
+          showToast(`✖ ${json.message}`, true);
+        }
+      } catch(e) {
+        showToast('Network error while booking', true);
+      }
+    }
+
+    async function cancelTicket(ticketId) {
+      if (!confirm('Are you sure you want to cancel this ticket? Seats will be immediately recovered for other attendees.')) return;
+      try {
+        const res = await fetch('/api/cancel-ticket', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ ticket_id: ticketId, user_id: 4 })
+        });
+        const json = await res.json();
+        if (json.status === 'success') {
+          showToast(`✔ ${json.message}`);
+          loadTickets();
+          loadEvents();
+        } else {
+          showToast(`✖ ${json.message}`, true);
+        }
+      } catch(e) {
+        showToast('Error cancelling ticket', true);
+      }
+    }
+
+    function openRescheduleModal(ticketId, code, currentEventId) {
+      document.getElementById('reschedTicketId').value = ticketId;
+      document.getElementById('reschedTicketCode').textContent = code;
+      const sel = document.getElementById('reschedTargetEvent');
+      sel.innerHTML = '';
+      allEvents.filter(e => e.id !== currentEventId).forEach(e => {
+        const opt = document.createElement('option');
+        opt.value = e.id;
+        opt.textContent = `${e.title} (${e.event_date} - ${e.available_seats} seats left)`;
+        sel.appendChild(opt);
+      });
+      document.getElementById('reschedModal').style.display = 'flex';
+    }
+
+    async function submitReschedule() {
+      const ticketId = document.getElementById('reschedTicketId').value;
+      const newEventId = document.getElementById('reschedTargetEvent').value;
+      try {
+        const res = await fetch('/api/reschedule-ticket', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ ticket_id: parseInt(ticketId), new_event_id: parseInt(newEventId), user_id: 4 })
+        });
+        const json = await res.json();
+        if (json.status === 'success') {
+          showToast(`✔ ${json.message}`);
+          closeModal('reschedModal');
+          loadTickets();
+          loadEvents();
+        } else {
+          showToast(`✖ ${json.message}`, true);
+        }
+      } catch(e) {
+        showToast('Error transferring ticket', true);
+      }
+    }
+
+    function openCreateEventModal() {
+      document.getElementById('createEventModal').style.display = 'flex';
+    }
+
+    async function submitCreateEvent() {
+      const title = document.getElementById('ceTitle').value;
+      const category = document.getElementById('ceCategory').value;
+      const venue = document.getElementById('ceVenue').value;
+      const event_date = document.getElementById('ceDate').value;
+      const ticket_price = document.getElementById('cePrice').value;
+      const total_capacity = document.getElementById('ceCapacity').value;
+
+      try {
+        const res = await fetch('/api/create-event', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            organizer_id: 1,
+            title, category, venue, event_date,
+            ticket_price: parseFloat(ticket_price),
+            total_capacity: parseInt(total_capacity)
+          })
+        });
+        const json = await res.json();
+        if (json.status === 'success') {
+          showToast('✔ Event published successfully!');
+          closeModal('createEventModal');
+          loadEvents();
+        } else {
+          showToast(`✖ ${json.message}`, true);
+        }
+      } catch(e) {
+        showToast('Error publishing event', true);
+      }
+    }
+
+    async function loadUserStories() {
+      try {
+        const res = await fetch('/api/user-stories');
+        const json = await res.json();
+        const tbody = document.getElementById('storiesTableBody');
+        tbody.innerHTML = '';
+        json.data.forEach(s => {
+          const prioClass = s.priority.includes('Must') ? 'badge-danger' : (s.priority.includes('Should') ? 'badge-warning' : 'badge-success');
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><code>${s.story_code}</code></td>
+            <td><strong>${s.title}</strong></td>
+            <td>${s.role}</td>
+            <td>${s.story_points} pts</td>
+            <td><span class="badge ${prioClass}">${s.priority}</span></td>
+            <td>${s.sprint_name || 'Sprint ' + s.sprint_id}</td>
+            <td><span class="badge badge-blue">${s.status}</span></td>
+            <td>👤 ${s.assignee}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch(e) {
+        console.error(e);
+      }
+    }
+
+    async function loadSprints() {
+      try {
+        const res = await fetch('/api/sprints');
+        const json = await res.json();
+        const tbody = document.getElementById('sprintsTableBody');
+        tbody.innerHTML = '';
+        json.data.forEach(sp => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>Sprint ${sp.sprint_number}</strong></td>
+            <td>${sp.name}</td>
+            <td>${sp.goal}</td>
+            <td>${sp.start_date} to ${sp.end_date}</td>
+            <td>${sp.committed_points} pts</td>
+            <td>${sp.completed_points} pts</td>
+            <td><strong>${sp.velocity} pts</strong></td>
+            <td><span class="badge badge-success">${sp.status}</span></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch(e) {
+        console.error(e);
+      }
+    }
+
+    async function loadAuditLogs() {
+      try {
+        const res = await fetch('/api/audit-logs');
+        const json = await res.json();
+        const tbody = document.getElementById('auditTableBody');
+        tbody.innerHTML = '';
+        json.data.forEach(l => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>#${l.id}</td>
+            <td><span class="badge badge-blue">${l.action_type}</span></td>
+            <td><strong>${l.user_name}</strong></td>
+            <td>${l.details}</td>
+            <td>${l.created_at}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch(e) {
+        console.error(e);
+      }
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    // Initial Load
+    loadEvents();
+  </script>
+</body>
+</html>
