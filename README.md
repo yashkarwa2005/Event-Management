@@ -220,6 +220,77 @@ Event-Management/
 
 ---
 
+## GitHub Scrum Project Setup (One-Click Setup)
+
+This project includes a fully automated **One-Click GitHub Project Setup** system. When you receive this PBL as a ZIP file, you can recreate the entire GitHub Scrum environment (Labels, Milestones, Scrum Issues, and GitHub Projects v2 Kanban Board) on **your own GitHub account** and **your own repository** with a single click.
+
+### Step 1: Create your own GitHub repository
+Log into your GitHub account and create a new, empty repository (for example, `Event-Management`).
+
+### Step 2: Clone your repository
+Clone your newly created repository to your computer:
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
+```
+
+### Step 3: Copy/extract this PBL into the repository
+Extract or copy all the project files from this ZIP folder into your cloned repository folder.
+
+### Step 4: Open the repository folder
+Open Command Prompt, PowerShell, or File Explorer inside the project root folder.
+
+### Step 5: Run setup-project.bat
+Double-click `setup-project.bat` or execute in terminal:
+```bat
+setup-project.bat
+```
+
+### Step 6: Authenticate with your GitHub account if prompted
+The script uses official GitHub CLI authentication:
+- If you are already authenticated, it detects your account automatically.
+- If not logged in, it prompts you to log into **your own account** via `gh auth login`.
+- *(Note: Your account must have write permissions to your repository and the `project` scope to create GitHub Projects.)*
+
+### Step 7: Automatic Repository Detection
+The script automatically detects your repository from:
+```bash
+git remote get-url origin
+```
+It supports both HTTPS (`https://github.com/OWNER/REPO.git`) and SSH (`git@github.com:OWNER/REPO.git`) remotes, displaying your owner and repository dynamically without any hardcoding.
+
+### Step 8: Automated Scrum Asset Provisioning
+The script automatically configures:
+- **GitHub Labels:** 12 color-coded labels (High = Red, Medium = Amber, Low = Green, Story = Purple, Task = Blue, Statuses = Blue/Orange/Green).
+- **Sprint Milestones:** Sprint 1 through Sprint 5.
+- **Scrum User Story Issues:** 12 INVEST-compliant user stories and 4 engineering action items from `.github/project-setup.json`.
+- **Duplicate Prevention:** Checks existing issues by `[US-xx]` identifier so re-running `setup-project.bat` never duplicates issues!
+- **GitHub Project (Kanban Board):** Creates/uses GitHub Projects (v2) named `<Project> — Scrum Board`.
+- **Kanban Fields & Columns:** Configures columns (`📋 Backlog`, `🔵 To Do`, `🟡 In Progress`, `🟣 Review / Testing`, `🟢 Done`), plus Priority, Sprint, Story Points, and Type fields.
+- **Issue Card Assignment:** Adds all created issues directly onto your Kanban board.
+
+### Step 9: Open the GitHub Project URL
+At completion, the script prints the exact GitHub Project URL:
+```text
+========================================
+ SETUP COMPLETE
+========================================
+Repository:              https://github.com/YOUR_USERNAME/YOUR_REPO
+Project / Kanban Board:  https://github.com/users/YOUR_USERNAME/projects/X
+Issues created:          16
+Issues already existing: 0
+Issues added to Project: 16
+Labels configured:       12
+Sprint Milestones:       5
+Kanban board:            Ready
+
+Open the Project:
+  https://github.com/users/YOUR_USERNAME/projects/X
+========================================
+```
+You can click or copy the link, open the **Projects** tab in your repository, and showcase the live Scrum board during your evaluation or viva!
+
+---
+
 ## 12. Installation & Setup
 
 ### Prerequisites

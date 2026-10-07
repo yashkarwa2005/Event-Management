@@ -1,0 +1,239 @@
+{
+  "project": {
+    "name": "Event Management System — Scrum Board",
+    "description": "Scrum Board, User Story Backlog, and Kanban Workflow for EventSphere PBL",
+    "short_code": "EVT"
+  },
+  "columns": [
+    { "name": "📋 Backlog", "key": "Backlog" },
+    { "name": "🔵 To Do", "key": "To Do" },
+    { "name": "🟡 In Progress", "key": "In Progress" },
+    { "name": "🟣 Review / Testing", "key": "Review / Testing" },
+    { "name": "🟢 Done", "key": "Done" }
+  ],
+  "labels": [
+    { "name": "priority:high", "color": "d73a4a", "description": "High Priority - Must Have [Red]" },
+    { "name": "priority:medium", "color": "fbca04", "description": "Medium Priority - Should Have [Amber]" },
+    { "name": "priority:low", "color": "0e8a16", "description": "Low Priority - Could Have [Green]" },
+    { "name": "type:user-story", "color": "7057ff", "description": "Agile User Story [Purple]" },
+    { "name": "type:task", "color": "0075ca", "description": "Engineering Task [Blue]" },
+    { "name": "type:bug", "color": "b60205", "description": "Software Defect / Bug [Dark Red]" },
+    { "name": "type:testing", "color": "1d76db", "description": "Test Case & Verification [Sky Blue]" },
+    { "name": "type:documentation", "color": "008672", "description": "Documentation & Diagrams [Teal]" },
+    { "name": "status:todo", "color": "1d76db", "description": "Kanban Column: To Do" },
+    { "name": "status:in-progress", "color": "d93f0b", "description": "Kanban Column: In Progress" },
+    { "name": "status:review", "color": "a2eeef", "description": "Kanban Column: Review / Testing" },
+    { "name": "status:done", "color": "0e8a16", "description": "Kanban Column: Done" }
+  ],
+  "milestones": [
+    {
+      "number": 1,
+      "title": "Sprint 1",
+      "description": "User Authentication & Role Architecture (Days 1-7)"
+    },
+    {
+      "number": 2,
+      "title": "Sprint 2",
+      "description": "Event Publishing & Discovery (Days 8-14)"
+    },
+    {
+      "number": 3,
+      "title": "Sprint 3",
+      "description": "Atomic Booking & Capacity Guard (Days 15-21)"
+    },
+    {
+      "number": 4,
+      "title": "Sprint 4",
+      "description": "Cancellation & Seat Recovery (Days 22-28)"
+    },
+    {
+      "number": 5,
+      "title": "Sprint 5",
+      "description": "In-App Scrum Engine & Release (Days 29-35)"
+    }
+  ],
+  "fields": {
+    "Priority": ["🔴 High", "🟠 Medium", "🟢 Low"],
+    "Type": ["User Story", "Task", "Bug", "Testing", "Documentation"],
+    "Sprint": ["Sprint 1", "Sprint 2", "Sprint 3", "Sprint 4", "Sprint 5"],
+    "Story Points": ["1", "2", "3", "5", "8", "13"]
+  },
+  "issues": [
+    {
+      "identifier": "US-01",
+      "title": "[US-01] User Registration & Salted Hashing",
+      "body": "### User Story\n**As an** unregistered attendee,\n**I want** to register an account with username, email, and password,\n**So that** I can access the event ticketing platform securely.\n\n### Scrum Metadata\n- **Story Points:** 3\n- **Priority:** 🔴 High (Must Have)\n- **Sprint:** Sprint 1\n- **Type:** User Story\n- **Kanban Status:** 🟢 Done\n\n### Acceptance Criteria\n- [x] Validates unique username and email format.\n- [x] Generates random salt and hashes password with SHA-256.\n- [x] Prevents duplicate usernames or emails with clear error messages.",
+      "type": "User Story",
+      "priority": "🔴 High",
+      "sprint": "Sprint 1",
+      "story_points": 3,
+      "status": "🟢 Done",
+      "labels": ["type:user-story", "priority:high", "status:done"]
+    },
+    {
+      "identifier": "US-02",
+      "title": "[US-02] Secure Credential Authentication & Role Sessions",
+      "body": "### User Story\n**As a** registered user,\n**I want** to log in using my credentials,\n**So that** the system loads my authenticated session with role permissions.\n\n### Scrum Metadata\n- **Story Points:** 3\n- **Priority:** 🔴 High (Must Have)\n- **Sprint:** Sprint 1\n- **Type:** User Story\n- **Kanban Status:** 🟢 Done\n\n### Acceptance Criteria\n- [x] Verifies submitted password hash against stored salted hash.\n- [x] Rejects invalid credentials cleanly without revealing sensitive data.\n- [x] Assigns session role (`attendee`, `organizer`, `admin`).",
+      "type": "User Story",
+      "priority": "🔴 High",
+      "sprint": "Sprint 1",
+      "story_points": 3,
+      "status": "🟢 Done",
+      "labels": ["type:user-story", "priority:high", "status:done"]
+    },
+    {
+      "identifier": "US-03",
+      "title": "[US-03] Search & Filter Events by Category & Venue",
+      "body": "### User Story\n**As an** attendee,\n**I want** to search events by category, venue, and title,\n**So that** I can discover relevant events quickly.\n\n### Scrum Metadata\n- **Story Points:** 5\n- **Priority:** 🔴 High (Must Have)\n- **Sprint:** Sprint 2\n- **Type:** User Story\n- **Kanban Status:** 🟢 Done\n\n### Acceptance Criteria\n- [x] Case-insensitive keyword search across title and venue.\n- [x] Category filtering (Technology, Coding, Cultural, Workshop).\n- [x] Displays ticket pricing, schedule, and organizer details.",
+      "type": "User Story",
+      "priority": "🔴 High",
+      "sprint": "Sprint 2",
+      "story_points": 5,
+      "status": "🟢 Done",
+      "labels": ["type:user-story", "priority:high", "status:done"]
+    },
+    {
+      "identifier": "US-04",
+      "title": "[US-04] Real-time Seat Quota & Availability Query",
+      "body": "### User Story\n**As an** attendee,\n**I want** to view real-time remaining seat capacity for any event,\n**So that** I know ticket booking feasibility before reserving.\n\n### Scrum Metadata\n- **Story Points:** 3\n- **Priority:** 🔴 High (Must Have)\n- **Sprint:** Sprint 2\n- **Type:** User Story\n- **Kanban Status:** 🟢 Done\n\n### Acceptance Criteria\n- [x] Computes available seats dynamically as `total_capacity - booked_tickets`.\n- [x] Updates remaining capacity in real-time upon booking and cancellation.\n- [x] Marks event visually as 'Sold Out' when remaining seats reach 0.",
+      "type": "User Story",
+      "priority": "🔴 High",
+      "sprint": "Sprint 2",
+      "story_points": 3,
+      "status": "🟢 Done",
+      "labels": ["type:user-story", "priority:high", "status:done"]
+    },
+    {
+      "identifier": "US-05",
+      "title": "[US-05] Atomic Ticket Reservation & Concurrency Guard",
+      "body": "### User Story\n**As an** attendee,\n**I want** to reserve event tickets in an atomic database transaction,\n**So that** my booking is secured without any risk of overbooking race conditions.\n\n### Scrum Metadata\n- **Story Points:** 8\n- **Priority:** 🔴 High (Must Have)\n- **Sprint:** Sprint 3\n- **Type:** User Story\n- **Kanban Status:** 🟢 Done\n\n### Acceptance Criteria\n- [x] Executes reservation within atomic SQLite transaction (`BEGIN IMMEDIATE`).\n- [x] Defensive concurrency check aborts requests exceeding remaining capacity.\n- [x] Generates unique ticket reference code (e.g., `EVT-A1B2C3D4`).",
+      "type": "User Story",
+      "priority": "🔴 High",
+      "sprint": "Sprint 3",
+      "story_points": 8,
+      "status": "🟢 Done",
+      "labels": ["type:user-story", "priority:high", "status:done"]
+    },
+    {
+      "identifier": "US-06",
+      "title": "[US-06] Attendee Ticket History & Reservation Status",
+      "body": "### User Story\n**As an** attendee,\n**I want** to view my active and past event tickets,\n**So that** I can track my event schedule and reference codes.\n\n### Scrum Metadata\n- **Story Points:** 3\n- **Priority:** 🟠 Medium (Should Have)\n- **Sprint:** Sprint 3\n- **Type:** User Story\n- **Kanban Status:** 🟢 Done\n\n### Acceptance Criteria\n- [x] Returns all reservations linked to authenticated attendee account.\n- [x] Displays event title, date, venue, ticket count, total fee, and status (`Confirmed`, `Cancelled`).",
+      "type": "User Story",
+      "priority": "🟠 Medium",
+      "sprint": "Sprint 3",
+      "story_points": 3,
+      "status": "🟢 Done",
+      "labels": ["type:user-story", "priority:medium", "status:done"]
+    },
+    {
+      "identifier": "US-07",
+      "title": "[US-07] Ticket Cancellation & Capacity Recovery",
+      "body": "### User Story\n**As an** attendee,\n**I want** to cancel an existing ticket reservation,\n**So that** seat capacity is immediately recovered for other attendees.\n\n### Scrum Metadata\n- **Story Points:** 5\n- **Priority:** 🔴 High (Must Have)\n- **Sprint:** Sprint 4\n- **Type:** User Story\n- **Kanban Status:** 🟢 Done\n\n### Acceptance Criteria\n- [x] Sets ticket status to `Cancelled` with timestamp.\n- [x] Atomically decrements `booked_tickets` count on event record.\n- [x] Prevents duplicate or redundant cancellations.",
+      "type": "User Story",
+      "priority": "🔴 High",
+      "sprint": "Sprint 4",
+      "story_points": 5,
+      "status": "🟢 Done",
+      "labels": ["type:user-story", "priority:high", "status:done"]
+    },
+    {
+      "identifier": "US-08",
+      "title": "[US-08] Ticket Rescheduling & Event Transfer",
+      "body": "### User Story\n**As an** attendee,\n**I want** to transfer my ticket to an alternative event,\n**So that** I can update my attendance schedule cleanly in one step.\n\n### Scrum Metadata\n- **Story Points:** 5\n- **Priority:** 🟠 Medium (Should Have)\n- **Sprint:** Sprint 4\n- **Type:** User Story\n- **Kanban Status:** 🟢 Done\n\n### Acceptance Criteria\n- [x] Releases seats on old event atomically.\n- [x] Locks seats on new target event atomically.\n- [x] Updates ticket record with new event details and amount.",
+      "type": "User Story",
+      "priority": "🟠 Medium",
+      "sprint": "Sprint 4",
+      "story_points": 5,
+      "status": "🟢 Done",
+      "labels": ["type:user-story", "priority:medium", "status:done"]
+    },
+    {
+      "identifier": "US-09",
+      "title": "[US-09] Real-time Booking Confirmation Receipts",
+      "body": "### User Story\n**As an** attendee,\n**I want** to receive an immediate verifiable ticket receipt,\n**So that** I have official proof of registration for venue entry.\n\n### Scrum Metadata\n- **Story Points:** 3\n- **Priority:** 🟠 Medium (Should Have)\n- **Sprint:** Sprint 5\n- **Type:** User Story\n- **Kanban Status:** 🟢 Done\n\n### Acceptance Criteria\n- [x] Displays ticket reference code, event date, venue, seats, and notes.",
+      "type": "User Story",
+      "priority": "🟠 Medium",
+      "sprint": "Sprint 5",
+      "story_points": 3,
+      "status": "🟢 Done",
+      "labels": ["type:user-story", "priority:medium", "status:done"]
+    },
+    {
+      "identifier": "US-10",
+      "title": "[US-10] Organizer Event Publishing & Quota Management",
+      "body": "### User Story\n**As an** event organizer,\n**I want** to publish new events with custom capacity and schedule,\n**So that** attendees can register for my events.\n\n### Scrum Metadata\n- **Story Points:** 5\n- **Priority:** 🔴 High (Must Have)\n- **Sprint:** Sprint 2\n- **Type:** User Story\n- **Kanban Status:** 🟢 Done\n\n### Acceptance Criteria\n- [x] Validates title, category, venue, schedule, fee, and total capacity > 0.\n- [x] Inserts new event into public catalog with status `Open`.",
+      "type": "User Story",
+      "priority": "🔴 High",
+      "sprint": "Sprint 2",
+      "story_points": 5,
+      "status": "🟢 Done",
+      "labels": ["type:user-story", "priority:high", "status:done"]
+    },
+    {
+      "identifier": "US-11",
+      "title": "[US-11] Platform Administrative Audit Log & Oversight",
+      "body": "### User Story\n**As an** administrator,\n**I want** to inspect all events and registrations globally,\n**So that** I can monitor platform utilization and transactional integrity.\n\n### Scrum Metadata\n- **Story Points:** 3\n- **Priority:** 🟢 Low (Could Have)\n- **Sprint:** Sprint 5\n- **Type:** User Story\n- **Kanban Status:** 🟢 Done\n\n### Acceptance Criteria\n- [x] Centralized audit log view across all organizers and ticket sales.",
+      "type": "User Story",
+      "priority": "🟢 Low",
+      "sprint": "Sprint 5",
+      "story_points": 3,
+      "status": "🟢 Done",
+      "labels": ["type:user-story", "priority:low", "status:done"]
+    },
+    {
+      "identifier": "US-12",
+      "title": "[US-12] In-App Scrum Backlog, Sprint & Kanban Engine",
+      "body": "### User Story\n**As a** Scrum development team member,\n**I want** to track user stories and Kanban workflows within the software,\n**So that** our team transparently practices disciplined Agile software engineering.\n\n### Scrum Metadata\n- **Story Points:** 8\n- **Priority:** 🔴 High (Must Have)\n- **Sprint:** Sprint 5\n- **Type:** User Story\n- **Kanban Status:** 🟢 Done\n\n### Acceptance Criteria\n- [x] Persistent SQLite user stories and sprints tables.\n- [x] Terminal ASCII Kanban board with 5 columns.\n- [x] Standalone interactive Web Kanban board and dashboard.",
+      "type": "User Story",
+      "priority": "🔴 High",
+      "sprint": "Sprint 5",
+      "story_points": 8,
+      "status": "🟢 Done",
+      "labels": ["type:user-story", "priority:high", "status:done"]
+    },
+    {
+      "identifier": "TASK-01",
+      "title": "[TASK-01] Database Schema Setup & Foreign Key Verification",
+      "body": "### Engineering Task\nImplement SQLite schema for users, events, tickets, user_stories, and sprints tables with strict foreign key constraints.\n\n### Scrum Metadata\n- **Story Points:** 2\n- **Priority:** 🔴 High\n- **Sprint:** Sprint 1\n- **Type:** Task\n- **Kanban Status:** 🟢 Done",
+      "type": "Task",
+      "priority": "🔴 High",
+      "sprint": "Sprint 1",
+      "story_points": 2,
+      "status": "🟢 Done",
+      "labels": ["type:task", "priority:high", "status:done"]
+    },
+    {
+      "identifier": "TASK-02",
+      "title": "[TASK-02] Concurrency-Safe Booking with BEGIN IMMEDIATE",
+      "body": "### Engineering Task\nImplement transaction locking using `BEGIN IMMEDIATE` to guarantee ticket reservations prevent capacity overshoot under concurrent access.\n\n### Scrum Metadata\n- **Story Points:** 5\n- **Priority:** 🔴 High\n- **Sprint:** Sprint 3\n- **Type:** Task\n- **Kanban Status:** 🟢 Done",
+      "type": "Task",
+      "priority": "🔴 High",
+      "sprint": "Sprint 3",
+      "story_points": 5,
+      "status": "🟢 Done",
+      "labels": ["type:task", "priority:high", "status:done"]
+    },
+    {
+      "identifier": "TASK-03",
+      "title": "[TASK-03] Automated Capacity Recovery on Ticket Cancellation",
+      "body": "### Engineering Task\nVerify atomic decrement of `booked_tickets` when an attendee cancels a confirmed reservation.\n\n### Scrum Metadata\n- **Story Points:** 3\n- **Priority:** 🔴 High\n- **Sprint:** Sprint 4\n- **Type:** Task\n- **Kanban Status:** 🟢 Done",
+      "type": "Task",
+      "priority": "🔴 High",
+      "sprint": "Sprint 4",
+      "story_points": 3,
+      "status": "🟢 Done",
+      "labels": ["type:task", "priority:high", "status:done"]
+    },
+    {
+      "identifier": "TASK-04",
+      "title": "[TASK-04] Automated Test Suite Execution (15 Unit Tests)",
+      "body": "### Testing Task\nExecute automated unit tests covering auth, event management, bookings, concurrency, cancellations, and Scrum engines.\n\n### Scrum Metadata\n- **Story Points:** 3\n- **Priority:** 🔴 High\n- **Sprint:** Sprint 5\n- **Type:** Testing\n- **Kanban Status:** 🟢 Done",
+      "type": "Testing",
+      "priority": "🔴 High",
+      "sprint": "Sprint 5",
+      "story_points": 3,
+      "status": "🟢 Done",
+      "labels": ["type:testing", "priority:high", "status:done"]
+    }
+  ]
+}
